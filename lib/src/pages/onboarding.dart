@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 import 'role_selection_screen.dart';
@@ -14,20 +15,18 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
 
   final List<Map<String, String>> onboardingData = [
     {
-      "image": "assets/images/driver.png", // Replace with actual image path
+      "image": "assets/images/owner.png",
       "title": "Stay ahead of the road",
       "description":
           "Manage your taxis effortlessly and keep them running smoothly!"
     },
     {
-      "image":
-          "assets/images/taxiDriver2.png", // Replace with actual image path
+      "image": "assets/images/driver.png",
       "title": "Drive smarter, not harder",
       "description": "Accept rides, manage your schedule, and stay in control!"
     },
     {
-      "image":
-          "assets/images/taxiPassenger.png", // Replace with actual image path
+      "image": "assets/images/client.png",
       "title": "Find a ride in seconds",
       "description": "Safe, fast, and reliable rides at your fingertips!"
     }
@@ -42,7 +41,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xFFD2DDDB), // Background color
+      backgroundColor: Colors.white,
       body: Column(
         children: [
           Expanded(
@@ -55,16 +54,17 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Image.asset(onboardingData[index]["image"]!,
-                        width: 250, height: 250),
+                        width: MediaQuery.of(context).size.width + 100, 
+                        height: 320),
                     SizedBox(height: 30),
                     Text(
                       onboardingData[index]["title"]!,
                       textAlign: TextAlign.center,
-                      style: TextStyle(
-                        fontSize: 22,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.black,
-                      ),
+                      style: GoogleFonts.inter(
+    fontSize: 22,
+    fontWeight: FontWeight.bold,
+    color: Colors.black,
+  ),
                     ),
                     SizedBox(height: 10),
                     Padding(
@@ -72,7 +72,11 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                       child: Text(
                         onboardingData[index]["description"]!,
                         textAlign: TextAlign.center,
-                        style: TextStyle(fontSize: 16, color: Colors.black54),
+                        style: GoogleFonts.inter(
+    fontSize: 16,
+    fontWeight: FontWeight.normal,
+    color: Colors.black54,
+  ),
                       ),
                     ),
                   ],
@@ -96,31 +100,33 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                 ),
                 SizedBox(height: 20),
                 _currentPage == onboardingData.length - 1
-                    ? ElevatedButton(
-                        onPressed: () {
-                          Navigator.pushReplacement(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => RoleSelectionScreen()),
-                          );
-                        },
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: Color.fromARGB(255, 101, 141, 136),
-                          padding: EdgeInsets.symmetric(
-                              horizontal: 40, vertical: 15),
+                    ? SizedBox(
+                        width: 200,  // Set a smaller width here
+                        child: ElevatedButton(
+                          onPressed: () {
+                            Navigator.pushReplacement(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => RoleSelectionScreen()),
+                            );
+                          },
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.black,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(30),
+                            ),
+                          ),
+                          child: Text(
+                            "Get Started",
+                            style: GoogleFonts.inter(
+    fontSize: 16,
+    fontWeight: FontWeight.bold,
+    color: Colors.white,
+  ),
+                          ),
                         ),
-                        child: Text("Get Started",
-                            style: TextStyle(color: Colors.white)),
                       )
-                    : TextButton(
-                        onPressed: () {
-                          _controller.nextPage(
-                              duration: Duration(milliseconds: 300),
-                              curve: Curves.easeIn);
-                        },
-                        child:
-                            Text("Next", style: TextStyle(color: Colors.black)),
-                      ),
+                    : Container(),
               ],
             ),
           ),
