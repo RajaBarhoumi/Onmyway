@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:onmyway/src/pages/auth.dart';
+
 
 class RoleSelectionScreen extends StatelessWidget {
   @override
@@ -23,14 +25,23 @@ class RoleSelectionScreen extends StatelessWidget {
           SizedBox(height: 20),
 
           // Buttons
-          _buildRoleButton(context, "Car Owner", () {
-            // TODO: Navigate to Car Owner Screen
+         _buildRoleButton(context, "Car Owner", () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => const AuthScreen()),
+            );
           }),
           _buildRoleButton(context, "Passenger", () {
-            // TODO: Navigate to Passenger Screen
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => const AuthScreen()),
+            );
           }),
           _buildRoleButton(context, "Driver", () {
-            // TODO: Navigate to Driver Screen
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => const AuthScreen()),
+            );
           }),
         ],
       ),

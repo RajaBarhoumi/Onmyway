@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:onmyway/src/pages/auth.dart';
 import 'onboarding.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -126,7 +127,7 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
                     onPressed: () {
                       Navigator.pushReplacement(
                         context,
-                        MaterialPageRoute(builder: (context) => OnboardingScreen()),
+                        MaterialPageRoute(builder: (context) => AuthScreen()),
                       );
                     },
                     style: ElevatedButton.styleFrom(
