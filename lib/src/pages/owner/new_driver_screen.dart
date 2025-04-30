@@ -52,7 +52,8 @@ class _NewDriverScreenState extends State<NewDriverScreen> {
     setState(() => _currentIndex = index);
 
     switch (index) {
-      case 0: // Home
+      case 0: 
+      Navigator.pushNamed(context, '/taxi_list');
         break;
       case 1: // Drivers
         // Already here
@@ -148,6 +149,14 @@ class _NewDriverScreenState extends State<NewDriverScreen> {
       ),
       body: Column(
         children: [
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+            child: Image.asset(
+              'assets/images/upload_doc.png',
+              height: 200,
+              //fit: BoxFit.contain,
+            ),
+          ),
           // Progress Indicator
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
@@ -167,6 +176,8 @@ class _NewDriverScreenState extends State<NewDriverScreen> {
               ],
             ),
           ),
+          // Added upload_doc.png image here
+
           Expanded(
             child: Stepper(
               currentStep: _currentStep,
@@ -180,11 +191,9 @@ class _NewDriverScreenState extends State<NewDriverScreen> {
                 }
                 if (_currentStep < 2) {
                   setState(() => _currentStep += 1);
-                  // Step 2 (Documents Upload) is opened when _currentStep becomes 1 (from Step 1)
-                  // Step 3 (Choose Work Hours) is opened when _currentStep becomes 2 (from Step 2)
                 } else {
                   // Handle save action
-                  Navigator.pop(context); // Go back after saving
+                  Navigator.pushNamed(context, AppRoutes.driverProfile);
                 }
               },
               onStepCancel: () {
@@ -198,7 +207,6 @@ class _NewDriverScreenState extends State<NewDriverScreen> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      // Show "Back" button for Steps 1 and 2
                       if (_currentStep > 0)
                         OutlinedButton(
                           onPressed: details.onStepCancel,
@@ -213,8 +221,7 @@ class _NewDriverScreenState extends State<NewDriverScreen> {
                           child: const Text('BACK'),
                         )
                       else
-                        const SizedBox(), // Empty space when no "Back" button
-                      // Show "Continue" for Steps 0 and 1, "Save" for Step 2
+                        const SizedBox(),
                       if (_currentStep < 2)
                         ElevatedButton(
                           onPressed: details.onStepContinue,
@@ -345,7 +352,7 @@ class _NewDriverScreenState extends State<NewDriverScreen> {
                   ),
                   isActive: _currentStep >= 0,
                 ),
-                // Step 2: Documents Upload (Updated with image_picker)
+                // Step 2: Documents Upload
                 Step(
                   title: const Text(''),
                   content: Column(
@@ -440,7 +447,7 @@ class _NewDriverScreenState extends State<NewDriverScreen> {
                   ),
                   isActive: _currentStep >= 1,
                 ),
-
+                // Step 3: Choose Work Hours
                 Step(
                   title: const Text(''),
                   content: Column(

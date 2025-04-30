@@ -399,7 +399,8 @@ class _TaxiOwnerDashboardState extends State<TaxiOwnerDashboard> {
     setState(() => _currentIndex = index);
 
     switch (index) {
-      case 0: // Taxi
+      case 0:
+        Navigator.pushNamed(context, '/taxi_list');
         break;
       case 1: // Drivers
         Navigator.pushNamed(context, AppRoutes.driverRatings);
