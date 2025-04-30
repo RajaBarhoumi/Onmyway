@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:onmyway/src/pages/owner/dashboard.dart';
+import 'package:onmyway/src/routes.dart';
 
 class AuthScreen extends StatefulWidget {
   const AuthScreen({super.key});
@@ -9,14 +11,15 @@ class AuthScreen extends StatefulWidget {
 }
 
 class _AuthScreenState extends State<AuthScreen> {
-  int _selectedTab = 0; // 0 for Sign Up, 1 for Login
-  bool _isOtpScreen = false; // To toggle between Sign Up and OTP
-  double _progressValue = 0.5; // Progress bar starts at 50%
+  int _selectedTab = 0;
+  bool _isOtpScreen = false;
+  double _progressValue = 0.5;
+  bool _agreedToTerms = false;
 
   void _onSignUpPressed() {
     setState(() {
       _isOtpScreen = true;
-      _progressValue = 1.0; // Progress bar fully filled when moving to OTP
+      _progressValue = 1.0;
     });
   }
 
@@ -29,97 +32,37 @@ class _AuthScreenState extends State<AuthScreen> {
           padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 16.0),
           child: Column(
             children: [
-              // Logo at the top
-              Image.asset(
-                'assets/images/logo.png',
-                height: 60,
-              ),
-              const SizedBox(height: 32),
-
-              // Horizontal Navigation Box
+              Image.asset('assets/images/logo.png', height: 70),
+              const SizedBox(height: 25),
               Row(
                 children: [
-                  Expanded(
-                    child: GestureDetector(
-                      onTap: () {
-                        setState(() {
-                          _selectedTab = 0;
-                          _isOtpScreen = false;
-                          _progressValue = 0.5;
-                        });
-                      },
-                      child: Container(
-                        padding: const EdgeInsets.symmetric(vertical: 12),
-                        decoration: BoxDecoration(
-                          color: _selectedTab == 0 ? Colors.yellow[700] : Colors.grey[400],
-                          borderRadius: const BorderRadius.only(
-                            topLeft: Radius.circular(8),
-                            bottomLeft: Radius.circular(8),
-                          ),
-                        ),
-                        child: Center(
-                          child: Text(
-                            'SIGN UP',
-                            style: GoogleFonts.inter(
-                              fontSize: 16,
-                              color: _selectedTab == 0 ? Colors.white : Colors.grey[600],
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                  Expanded(
-                    child: GestureDetector(
-                      onTap: () {
-                        setState(() {
-                          _selectedTab = 1;
-                          _isOtpScreen = false;
-                          _progressValue = 0.5;
-                        });
-                      },
-                      child: Container(
-                        padding: const EdgeInsets.symmetric(vertical: 12),
-                        decoration: BoxDecoration(
-                          color: _selectedTab == 1 ? Colors.yellow[700] : Colors.grey[400],
-                          borderRadius: const BorderRadius.only(
-                            topRight: Radius.circular(8),
-                            bottomRight: Radius.circular(8),
-                          ),
-                        ),
-                        child: Center(
-                          child: Text(
-                            'LOGIN',
-                            style: GoogleFonts.inter(
-                              fontSize: 16,
-                              color: _selectedTab == 1 ? Colors.white : Colors.grey[600],
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
+                  _buildTabButton('Sign up', 0),
+                  _buildTabButton('Login', 1),
                 ],
               ),
-              const SizedBox(height: 16),
-
-              // Progress Bar (visible only during Sign Up/OTP flow)
-              if (_selectedTab == 0)
-                LinearProgressIndicator(
-                  value: _progressValue,
-                  backgroundColor: Colors.grey[400],
-                  valueColor: const AlwaysStoppedAnimation<Color>(Colors.black),
-                ),
-              const SizedBox(height: 32),
-
-              // Dynamic Content based on tab and state
+              const SizedBox(height: 30),
               Expanded(
-                child: _selectedTab == 0
-                    ? (_isOtpScreen ? _buildOtpContent() : _buildSignUpContent())
-                    : _buildLoginContent(),
+                child: SingleChildScrollView(
+                  child: AnimatedSwitcher(
+                    duration: const Duration(milliseconds: 300),
+                    child: _selectedTab == 0
+                        ? (_isOtpScreen
+                            ? _buildOtpContent()
+                            : _buildSignUpContent())
+                        : _buildLoginContent(),
+                  ),
+                ),
               ),
+              if (_selectedTab == 0)
+                Padding(
+                  padding: const EdgeInsets.only(top: 16.0),
+                  child: LinearProgressIndicator(
+                    value: _progressValue,
+                    backgroundColor: Colors.grey[400],
+                    valueColor:
+                        const AlwaysStoppedAnimation<Color>(Colors.black),
+                  ),
+                ),
             ],
           ),
         ),
@@ -127,171 +70,87 @@ class _AuthScreenState extends State<AuthScreen> {
     );
   }
 
-  // Sign Up Content
-  Widget _buildSignUpContent() {
-    return Column(
-      children: [
-        TextField(
-          decoration: InputDecoration(
-            hintText: 'FULL NAME',
-            hintStyle: GoogleFonts.inter(color: Colors.grey),
-            filled: true,
-            fillColor: Colors.white,
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(8),
-              borderSide: BorderSide.none,
-            ),
-          ),
-        ),
-        const SizedBox(height: 16),
-        TextField(
-          decoration: InputDecoration(
-            hintText: 'PHONE NUMBER',
-            hintStyle: GoogleFonts.inter(color: Colors.grey),
-            filled: true,
-            fillColor: Colors.white,
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(8),
-              borderSide: BorderSide.none,
-            ),
-          ),
-        ),
-        const SizedBox(height: 16),
-        TextField(
-          obscureText: true,
-          decoration: InputDecoration(
-            hintText: 'PASSWORD',
-            hintStyle: GoogleFonts.inter(color: Colors.grey),
-            filled: true,
-            fillColor: Colors.white,
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(8),
-              borderSide: BorderSide.none,
-            ),
-          ),
-        ),
-        const SizedBox(height: 16),
-        TextField(
-          obscureText: true,
-          decoration: InputDecoration(
-            hintText: 'CONFIRM PASSWORD',
-            hintStyle: GoogleFonts.inter(color: Colors.grey),
-            filled: true,
-            fillColor: Colors.white,
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(8),
-              borderSide: BorderSide.none,
-            ),
-          ),
-        ),
-        const SizedBox(height: 16),
-        Row(
-          children: [
-            Checkbox(value: false, onChanged: (value) {}),
-            Text(
-              'I agree the terms of use and privacy policy',
-              style: GoogleFonts.inter(fontSize: 14, color: Colors.yellow[700]),
-            ),
-          ],
-        ),
-        const Spacer(),
-        ElevatedButton(
-          onPressed: _onSignUpPressed,
-          style: ElevatedButton.styleFrom(
-            backgroundColor: Colors.black,
-            minimumSize: const Size(double.infinity, 50),
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(8),
-            ),
-          ),
-          child: Text(
-            'SIGN UP',
-            style: GoogleFonts.inter(
-              fontSize: 16,
-              color: Colors.white,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-        ),
-      ],
-    );
-  }
-
-  // OTP Content
-  Widget _buildOtpContent() {
-    return Column(
-      children: [
-        Row(
-          children: [
-            IconButton(
-              icon: const Icon(Icons.arrow_back, color: Colors.black),
-              onPressed: () {
-                setState(() {
-                  _isOtpScreen = false;
-                  _progressValue = 0.5;
-                });
-              },
-            ),
-          ],
-        ),
-        const SizedBox(height: 32),
-        Text(
-          'Verify OTP',
-          style: GoogleFonts.inter(
-            fontSize: 24,
-            fontWeight: FontWeight.bold,
-            color: Colors.black,
-          ),
-        ),
-        const SizedBox(height: 16),
-        Text(
-          'Please enter the code we sent you',
-          style: GoogleFonts.inter(fontSize: 16, color: Colors.grey),
-        ),
-        const SizedBox(height: 32),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: List.generate(
-            4,
-            (index) => SizedBox(
-              width: 50,
-              child: TextField(
-                textAlign: TextAlign.center,
-                keyboardType: TextInputType.number,
-                maxLength: 1,
-                decoration: InputDecoration(
-                  counterText: '',
-                  filled: true,
-                  fillColor: Colors.white,
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(8),
-                    borderSide: BorderSide.none,
+  Widget _buildTabButton(String label, int index) {
+    final isSelected = _selectedTab == index;
+    return Expanded(
+      child: GestureDetector(
+        onTap: () {
+          setState(() {
+            _selectedTab = index;
+            _isOtpScreen = false;
+            _progressValue = 0.5;
+          });
+        },
+        child: Container(
+          padding: const EdgeInsets.symmetric(vertical: 12),
+          decoration: BoxDecoration(
+            color: isSelected ? Colors.yellow[700] : Colors.grey[400],
+            borderRadius: index == 0
+                ? const BorderRadius.only(
+                    topLeft: Radius.circular(10),
+                    bottomLeft: Radius.circular(10),
+                  )
+                : const BorderRadius.only(
+                    topRight: Radius.circular(10),
+                    bottomRight: Radius.circular(10),
                   ),
-                ),
+          ),
+          child: Center(
+            child: Text(
+              label,
+              style: GoogleFonts.inter(
+                fontSize: 16,
+                color: isSelected ? Colors.white : Colors.grey[600],
+                fontWeight: FontWeight.bold,
               ),
             ),
           ),
         ),
+      ),
+    );
+  }
+
+  Widget _buildSignUpContent() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        _buildTextField('Full name'),
         const SizedBox(height: 16),
-        TextButton(
-          onPressed: () {},
-          child: Text(
-            'Resend Code',
-            style: GoogleFonts.inter(fontSize: 14, color: Colors.grey),
-          ),
+        _buildTextField('Phone number', keyboardType: TextInputType.phone),
+        const SizedBox(height: 16),
+        _buildTextField('Password', obscure: true),
+        const SizedBox(height: 16),
+        _buildTextField('Confirm password', obscure: true),
+        const SizedBox(height: 16),
+        Row(
+          children: [
+            Checkbox(
+              value: _agreedToTerms,
+              onChanged: (value) {
+                setState(() => _agreedToTerms = value ?? false);
+              },
+            ),
+            Expanded(
+              child: Text(
+                'I agree to the terms of use and privacy policy',
+                style:
+                    GoogleFonts.inter(fontSize: 14, color: Colors.yellow[700]),
+              ),
+            ),
+          ],
         ),
-        const SizedBox(height: 32),
+        const SizedBox(height: 20),
         ElevatedButton(
-          onPressed: () {},
+          onPressed: _agreedToTerms ? _onSignUpPressed : null,
           style: ElevatedButton.styleFrom(
             backgroundColor: Colors.black,
             minimumSize: const Size(double.infinity, 50),
             shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(8),
+              borderRadius: BorderRadius.circular(10),
             ),
           ),
           child: Text(
-            'VERIFY',
+            'Sign up',
             style: GoogleFonts.inter(
               fontSize: 16,
               color: Colors.white,
@@ -303,37 +162,100 @@ class _AuthScreenState extends State<AuthScreen> {
     );
   }
 
-  // Login Content
+  Widget _buildOtpContent() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        IconButton(
+          icon: const Icon(Icons.arrow_back, color: Colors.black),
+          onPressed: () {
+            setState(() {
+              _isOtpScreen = false;
+              _progressValue = 0.5;
+            });
+          },
+        ),
+        const SizedBox(height: 32),
+        Center(
+          child: Column(
+            children: [
+              Text(
+                'Verify OTP',
+                style: GoogleFonts.inter(
+                    fontSize: 24,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black),
+              ),
+              const SizedBox(height: 16),
+              Text(
+                'Please enter the code we sent you',
+                style: GoogleFonts.inter(fontSize: 16, color: Colors.grey),
+              ),
+              const SizedBox(height: 32),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: List.generate(
+                  4,
+                  (index) => SizedBox(
+                    width: 50,
+                    child: TextField(
+                      textAlign: TextAlign.center,
+                      keyboardType: TextInputType.number,
+                      maxLength: 1,
+                      decoration: InputDecoration(
+                        counterText: '',
+                        filled: true,
+                        fillColor: Colors.white,
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10),
+                          borderSide: BorderSide.none,
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+              const SizedBox(height: 16),
+              TextButton(
+                onPressed: () {},
+                child: Text(
+                  'Resend Code',
+                  style: GoogleFonts.inter(fontSize: 14, color: Colors.grey),
+                ),
+              ),
+              const SizedBox(height: 32),
+              ElevatedButton(
+                onPressed: () {},
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.black,
+                  minimumSize: const Size(double.infinity, 50),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                ),
+                child: Text(
+                  'Verify',
+                  style: GoogleFonts.inter(
+                    fontSize: 16,
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ],
+    );
+  }
+
   Widget _buildLoginContent() {
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        TextField(
-          decoration: InputDecoration(
-            hintText: 'USERNAME OR EMAIL',
-            hintStyle: GoogleFonts.inter(color: Colors.grey),
-            filled: true,
-            fillColor: Colors.white,
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(8),
-              borderSide: BorderSide.none,
-            ),
-          ),
-        ),
+        _buildTextField('Email', keyboardType: TextInputType.emailAddress),
         const SizedBox(height: 16),
-        TextField(
-          obscureText: true,
-          decoration: InputDecoration(
-            hintText: 'PASSWORD',
-            hintStyle: GoogleFonts.inter(color: Colors.grey),
-            filled: true,
-            fillColor: Colors.white,
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(8),
-              borderSide: BorderSide.none,
-            ),
-            suffixIcon: const Icon(Icons.visibility_off, color: Colors.grey),
-          ),
-        ),
+        _buildTextField('Password', obscure: true),
         const SizedBox(height: 16),
         Align(
           alignment: Alignment.centerRight,
@@ -347,16 +269,18 @@ class _AuthScreenState extends State<AuthScreen> {
         ),
         const SizedBox(height: 16),
         ElevatedButton(
-          onPressed: () {},
+          onPressed: () {
+            Navigator.pushNamed(context, AppRoutes.dashboard);
+          },
           style: ElevatedButton.styleFrom(
             backgroundColor: Colors.black,
             minimumSize: const Size(double.infinity, 50),
             shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(8),
+              borderRadius: BorderRadius.circular(10),
             ),
           ),
           child: Text(
-            'LOG IN',
+            'Log in',
             style: GoogleFonts.inter(
               fontSize: 16,
               color: Colors.white,
@@ -364,7 +288,7 @@ class _AuthScreenState extends State<AuthScreen> {
             ),
           ),
         ),
-        const SizedBox(height: 16),
+        const SizedBox(height: 24),
         Row(
           children: [
             const Expanded(child: Divider()),
@@ -388,14 +312,13 @@ class _AuthScreenState extends State<AuthScreen> {
             ),
             const SizedBox(width: 16),
             IconButton(
-  onPressed: () {},
-  icon: Image.network(
-    'https://img.icons8.com/?size=100&id=qyRpAggnV0zH&format=png&color=000000',
-    height: 40,
-    //color: Colors.pink, // Apply pink color to the image
-    colorBlendMode: BlendMode.srcIn, // Ensure the color applies correctly
-  ),
-),
+              onPressed: () {},
+              icon: Image.network(
+                'https://img.icons8.com/?size=100&id=qyRpAggnV0zH&format=png&color=000000',
+                height: 40,
+                colorBlendMode: BlendMode.srcIn,
+              ),
+            ),
             const SizedBox(width: 16),
             IconButton(
               onPressed: () {},
@@ -403,21 +326,26 @@ class _AuthScreenState extends State<AuthScreen> {
             ),
           ],
         ),
-        const Spacer(),
-        TextButton(
-          onPressed: () {
-            setState(() {
-              _selectedTab = 0;
-              _isOtpScreen = false;
-              _progressValue = 0.5;
-            });
-          },
-          child: Text(
-            'CREATE AN ACCOUNT',
-            style: GoogleFonts.inter(fontSize: 14, color: Colors.grey),
-          ),
-        ),
       ],
+    );
+  }
+
+  Widget _buildTextField(String hint,
+      {bool obscure = false, TextInputType keyboardType = TextInputType.text}) {
+    return TextField(
+      obscureText: obscure,
+      keyboardType: keyboardType,
+      decoration: InputDecoration(
+        hintText: hint,
+        filled: true,
+        fillColor: Colors.white,
+        contentPadding:
+            const EdgeInsets.symmetric(horizontal: 16.0, vertical: 14.0),
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10),
+          borderSide: BorderSide.none,
+        ),
+      ),
     );
   }
 }
