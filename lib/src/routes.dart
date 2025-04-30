@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:onmyway/src/pages/auth.dart';
 import 'package:onmyway/src/pages/owner/dashboard.dart';
+import 'package:onmyway/src/pages/owner/new_driver_screen.dart';
 import 'package:onmyway/src/pages/role_selection_screen.dart';
 import 'package:onmyway/src/pages/splashscreen.dart';
 import 'package:onmyway/src/pages/owner/driver_list.dart';
@@ -11,6 +12,7 @@ class AppRoutes {
   static const String driverRatings = '/driver_list';
   static const String roleSelection = '/role_selection';
   static const String auth = '/auth';
+  static const String addDriver = '/add_driver';
 
   static Map<String, WidgetBuilder> getRoutes() {
     return {
@@ -19,6 +21,7 @@ class AppRoutes {
       driverRatings: (context) => const DriverRatingsScreen(),
       roleSelection : (context) => const RoleSelectionScreen(),
       auth: (context) => const AuthScreen(),
+      addDriver: (context) => const NewDriverScreen(),
 
     };
   }

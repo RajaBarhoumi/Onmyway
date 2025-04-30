@@ -152,9 +152,9 @@ class _DriverRatingsScreenState extends State<DriverRatingsScreen> {
             bottom: 30,
             child: FloatingActionButton(
               onPressed: () {
-                // Handle add button press
+                Navigator.pushNamed(context, AppRoutes.addDriver);
               },
-              backgroundColor: Colors.black54,
+              backgroundColor: Colors.black,
               child: const Icon(Icons.add, color: Colors.white),
             ),
           ),

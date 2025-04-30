@@ -14,41 +14,45 @@ class CustomBottomNav extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ConvexAppBar(
-      items: [
-        TabItem(
-          icon: Icon(Icons.local_taxi, size: 28, color: Colors.black54), // Taxi
-          title: 'Taxi',
-        ),
-        TabItem(
-          icon: Icon(Icons.people_alt,
-              size: 28, color: Colors.black54), // Drivers
-          title: 'Drivers',
-        ),
-        TabItem(
-          icon: Icon(Icons.home, size: 28, color: Colors.black54), // Home
-          title: 'Home',
-        ),
-        TabItem(
-          icon: Icon(Icons.calendar_today,
-              size: 28, color: Colors.black54), // Agenda
-          title: 'Agenda',
-        ),
-        TabItem(
-          icon: Icon(Icons.person, size: 28, color: Colors.black54), // Profile
-          title: 'Profile',
-        ),
-      ],
-      initialActiveIndex: currentIndex,
-      onTap: onTap,
-      style: TabStyle.reactCircle,
-      backgroundColor: const Color.fromARGB(255, 240, 240, 240),
-      activeColor: Colors.amber,
-      color: Colors.black54,
-      height: 55,
-      curveSize: 100,
-      top: -20,
-      elevation: 1,
+    return PhysicalModel(
+      color: Colors.transparent,
+      elevation: 20, // Shadow intensity
+      shadowColor: Colors.black38, // Shadow color
+      borderRadius: BorderRadius.circular(0), // No curve
+      child: ConvexAppBar(
+        items: [
+          TabItem(
+            icon: Icon(Icons.local_taxi, size: 28, color: Colors.black54),
+            title: 'Taxi',
+          ),
+          TabItem(
+            icon: Icon(Icons.people_alt, size: 28, color: Colors.black54),
+            title: 'Drivers',
+          ),
+          TabItem(
+            icon: Icon(Icons.home, size: 28, color: Colors.black54),
+            title: 'Home',
+          ),
+          TabItem(
+            icon: Icon(Icons.calendar_today, size: 28, color: Colors.black54),
+            title: 'Agenda',
+          ),
+          TabItem(
+            icon: Icon(Icons.person, size: 28, color: Colors.black54),
+            title: 'Profile',
+          ),
+        ],
+        initialActiveIndex: currentIndex,
+        onTap: onTap,
+        style: TabStyle.reactCircle,
+        backgroundColor: const Color.fromARGB(255, 224, 224, 224),
+        activeColor: Colors.amber,
+        color: Colors.black54,
+        height: 55,
+        curveSize: 100,
+        top: -20,
+        elevation: 5, // Keep for ConvexAppBar's internal shadow
+      ),
     );
   }
 }
