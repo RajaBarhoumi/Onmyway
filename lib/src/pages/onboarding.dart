@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:onmyway/src/routes.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 import 'role_selection_screen.dart';
@@ -104,11 +105,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                         width: 200,  // Set a smaller width here
                         child: ElevatedButton(
                           onPressed: () {
-                            Navigator.pushReplacement(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => RoleSelectionScreen()),
-                            );
+                            Navigator.pushNamed(context, AppRoutes.roleSelection);
                           },
                           style: ElevatedButton.styleFrom(
                             backgroundColor: Colors.black,

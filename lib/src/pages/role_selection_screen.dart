@@ -3,6 +3,8 @@ import 'package:onmyway/src/pages/auth.dart';
 
 
 class RoleSelectionScreen extends StatelessWidget {
+  const RoleSelectionScreen({super.key});
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
