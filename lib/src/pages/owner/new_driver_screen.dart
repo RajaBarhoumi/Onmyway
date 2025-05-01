@@ -53,13 +53,13 @@ class _NewDriverScreenState extends State<NewDriverScreen> {
 
     switch (index) {
       case 0: 
-      Navigator.pushNamed(context, '/taxi_list');
+      Navigator.pushNamed(context, AppRoutes.taxiList);
         break;
       case 1: // Drivers
         // Already here
         break;
-      case 2: // Agenda
-        Navigator.pushNamed(context, '/dashboard');
+      case 2: 
+        Navigator.pushNamed(context, AppRoutes.dashboard);
         break;
       case 3: // Taxi
         Navigator.pushNamed(context, '/agenda');

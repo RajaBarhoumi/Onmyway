@@ -400,7 +400,7 @@ class _TaxiOwnerDashboardState extends State<TaxiOwnerDashboard> {
 
     switch (index) {
       case 0:
-        Navigator.pushNamed(context, '/taxi_list');
+        Navigator.pushNamed(context, AppRoutes.taxiList);
         break;
       case 1: // Drivers
         Navigator.pushNamed(context, AppRoutes.driverRatings);

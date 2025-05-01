@@ -19,13 +19,13 @@ class _DriverProfileScreenState extends State<DriverProfileScreen> {
 
     switch (index) {
       case 0: 
-      Navigator.pushNamed(context, '/taxi_list');
+      Navigator.pushNamed(context, AppRoutes.taxiList);
         break;
       case 1: // Drivers
-        // Already here
+        //Navigator.pushNamed(context, AppRoutes.taxiList)
         break;
       case 2: // Agenda
-        Navigator.pushNamed(context, '/dashboard');
+        Navigator.pushNamed(context, AppRoutes.dashboard);
         break;
       case 3: // Taxi
         Navigator.pushNamed(context, '/agenda');

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:onmyway/src/routes.dart';
 import 'package:onmyway/src/widgets/custom_bottom_nav.dart';
 
 class TaxiListScreen extends StatefulWidget {
@@ -231,7 +232,7 @@ class _TaxiListScreenState extends State<TaxiListScreen> {
           setState(() => _showAddOptions = false);
           // Handle button tap
           if (text == 'Add Taxi') {
-            // Navigate to add taxi screen
+            Navigator.pushNamed(context, AppRoutes.addTaxi);
           } else {
             // Navigate to buy taxi screen
           }
