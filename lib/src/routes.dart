@@ -4,6 +4,7 @@ import 'package:onmyway/src/pages/owner/dashboard.dart';
 import 'package:onmyway/src/pages/owner/driver_profile_screen.dart';
 import 'package:onmyway/src/pages/owner/new_driver_screen.dart';
 import 'package:onmyway/src/pages/owner/new_taxi_screen.dart';
+import 'package:onmyway/src/pages/owner/taxi_details.dart';
 import 'package:onmyway/src/pages/owner/taxi_list.dart';
 import 'package:onmyway/src/pages/role_selection_screen.dart';
 import 'package:onmyway/src/pages/splashscreen.dart';
@@ -19,6 +20,7 @@ class AppRoutes {
   static const String driverProfile = '/driver_profile';
   static const String taxiList = '/taxi_list';
   static const String addTaxi = '/add_taxi';
+  static const String taxiDetails = '/taxi_details';
 
   static Map<String, WidgetBuilder> getRoutes() {
     return {
@@ -30,8 +32,8 @@ class AppRoutes {
       addDriver: (context) => const NewDriverScreen(),
       driverProfile: (context) => const DriverProfileScreen(),
       taxiList: (context) => const TaxiListScreen(),
-      addTaxi: (context) =>
-          const NewTaxiScreen(), // Placeholder for add taxi screen
+      addTaxi: (context) => const NewTaxiScreen(),
+      taxiDetails: (context) => const TaxiDetailsScreen(),
     };
   }
 }

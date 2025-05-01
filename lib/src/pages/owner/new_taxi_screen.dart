@@ -167,7 +167,7 @@ class _NewTaxiScreenState extends State<NewTaxiScreen> {
                   setState(() => _currentStep += 1);
                 } else {
                   // Save and navigate back
-                  Navigator.pop(context);
+                  Navigator.pushNamed(context, AppRoutes.taxiDetails);
                 }
               },
               onStepCancel: () {
@@ -453,4 +453,6 @@ class _NewTaxiScreenState extends State<NewTaxiScreen> {
       ),
     );
   }
+
+  
 }

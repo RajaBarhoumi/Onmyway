@@ -200,7 +200,7 @@ class _TaxiListScreenState extends State<TaxiListScreen> {
                 IconButton(
                   icon: const Icon(Icons.edit, color: Colors.blue),
                   onPressed: () {
-                    // Handle edit action
+                    Navigator.pushNamed(context, AppRoutes.addTaxi);
                   },
                 ),
                 IconButton(
@@ -212,7 +212,7 @@ class _TaxiListScreenState extends State<TaxiListScreen> {
                 IconButton(
                   icon: const Icon(Icons.visibility, color: Colors.orange),
                   onPressed: () {
-                    // Handle view details
+                    Navigator.pushNamed(context, AppRoutes.taxiDetails);
                   },
                 ),
               ],
